@@ -1,6 +1,6 @@
 ﻿# SerialScreen (ベータ版)
 
-[English README (英文ドキュメント)](https://github.com/lipoyang/SerealScreen/blob/master/README.md)
+[English README (英文ドキュメント)](https://github.com/lipoyang/SerialScreen/blob/master/README.md)
 
 ## はじめに
 
