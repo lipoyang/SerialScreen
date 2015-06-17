@@ -22,6 +22,7 @@
 #define CODE_drawString    0x2D
 #define CODE_drawImage     0x2E
 #define CODE_loadImage     0x2F
+#define CODE_redraw        0x30
 
 // colors
 const Color SerialScreen::BLACK   = 0x000000;
@@ -88,6 +89,16 @@ void SerialScreen::setScreen(int w, int h)
     m_command[8] = CODE_ETX;
     
     m_serialPort.write(m_command, 9);
+}
+
+// redraw the screen
+void SerialScreen::redraw()
+{
+    m_command[0] = CODE_STX;
+    m_command[1] = CODE_redraw;
+    m_command[2] = CODE_ETX;
+    
+    m_serialPort.write(m_command, 3);
 }
 
 // clear the screen

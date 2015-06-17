@@ -52,6 +52,7 @@ void setup()
     ss.drawImage(100, 350, 0);
     ss.drawImage(200, 350, 1);
     ss.drawImage(300, 350, 2);
+    ss.redraw();
    
     ss.close();
 }

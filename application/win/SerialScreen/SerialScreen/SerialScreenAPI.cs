@@ -27,6 +27,7 @@ namespace SerialScreen
         private const Byte CODE_drawString    = 0x2D;
         private const Byte CODE_drawImage     = 0x2E;
         private const Byte CODE_loadImage     = 0x2F;
+        private const Byte CODE_redraw        = 0x30;
 
         // default screen size
         public const int SCREEN_WIDTH = 640;
@@ -37,7 +38,6 @@ namespace SerialScreen
 
         // picture box
         private PictureBox pictureBox;
-        //private Graphics canvas;
 
         // pen, brush, font
         private Pen pen;
@@ -78,6 +78,9 @@ namespace SerialScreen
             {
                 case CODE_setScreen:
                     d = new CommandDelegate(setScreen);
+                    break;
+                case CODE_redraw:
+                    d = new CommandDelegate(redraw);
                     break;
                 case CODE_clearScreen:
                     d = new CommandDelegate(clearScreen);
@@ -143,18 +146,18 @@ namespace SerialScreen
             int h = Convert.ToInt32(command.Substring(4, 3), 16);
 
             // set screen size
- //           if (canvas != null)
- //          {
- //               canvas.Dispose();
- //               //canvas.ReleaseHdc();
- //           }
             parent.setScreen(w, h);
             this.pictureBox = parent.getScreen();
             Graphics canvas = Graphics.FromImage(pictureBox.BackgroundImage);
-//            this.canvas = Graphics.FromImage(pictureBox.BackgroundImage);
             canvas.Clear(Color.Black);
             canvas.Dispose();
 
+            pictureBox.Invalidate();
+        }
+
+        // redraw my screen
+        private void redraw(string command)
+        {
             pictureBox.Invalidate();
         }
 
@@ -198,8 +201,6 @@ namespace SerialScreen
             Graphics canvas = Graphics.FromImage(pictureBox.BackgroundImage);
             canvas.DrawLine(pen, x1, y1, x2, y2);
             canvas.Dispose();
-
-            pictureBox.Invalidate();
         }
 
         // draw a rectangle
@@ -213,8 +214,6 @@ namespace SerialScreen
             Graphics canvas = Graphics.FromImage(pictureBox.BackgroundImage);
             canvas.DrawRectangle(pen, x, y, w, h);
             canvas.Dispose();
-
-            pictureBox.Invalidate();
         }
 
         // fill a rectangle
@@ -228,8 +227,6 @@ namespace SerialScreen
             Graphics canvas = Graphics.FromImage(pictureBox.BackgroundImage);
             canvas.FillRectangle(brush, x, y, w, h);
             canvas.Dispose();
-
-            pictureBox.Invalidate();
         }
 
         // draw a polygon
@@ -250,8 +247,6 @@ namespace SerialScreen
                 Graphics canvas = Graphics.FromImage(pictureBox.BackgroundImage);
                 canvas.DrawPolygon(pen, points);
                 canvas.Dispose();
-
-                pictureBox.Invalidate();
             }
         }
 
@@ -273,8 +268,6 @@ namespace SerialScreen
                 Graphics canvas = Graphics.FromImage(pictureBox.BackgroundImage);
                 canvas.FillPolygon(brush, points);
                 canvas.Dispose();
-
-                pictureBox.Invalidate();
             }
         }
 
@@ -289,8 +282,6 @@ namespace SerialScreen
             Graphics canvas = Graphics.FromImage(pictureBox.BackgroundImage);
             canvas.DrawEllipse(pen, x, y, w, h);
             canvas.Dispose();
-
-            pictureBox.Invalidate();
         }
 
         // fill a circle
@@ -304,8 +295,6 @@ namespace SerialScreen
             Graphics canvas = Graphics.FromImage(pictureBox.BackgroundImage);
             canvas.FillEllipse(brush, x, y, w, h);
             canvas.Dispose();
-
-            pictureBox.Invalidate();
         }
 
         // draw a pie
@@ -321,8 +310,6 @@ namespace SerialScreen
             Graphics canvas = Graphics.FromImage(pictureBox.BackgroundImage);
             canvas.DrawPie(pen, x, y, w, h, start, sweep);
             canvas.Dispose();
-
-            pictureBox.Invalidate();
         }
 
         // fill a pie
@@ -338,8 +325,6 @@ namespace SerialScreen
             Graphics canvas = Graphics.FromImage(pictureBox.BackgroundImage);
             canvas.FillPie(brush, x, y, w, h, start, sweep);
             canvas.Dispose();
-
-            pictureBox.Invalidate();
         }
 
         // set my font
@@ -362,8 +347,6 @@ namespace SerialScreen
             Graphics canvas = Graphics.FromImage(pictureBox.BackgroundImage);
             canvas.DrawString(s, font, brush, x, y);
             canvas.Dispose();
-
-            pictureBox.Invalidate();
         }
 
         // draw a image
@@ -382,8 +365,6 @@ namespace SerialScreen
                     canvas.Dispose();
                 }
             }
-
-            pictureBox.Invalidate();
         }
 
         // load a image

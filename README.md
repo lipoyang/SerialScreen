@@ -50,6 +50,7 @@ The `Point` structure is used to specify coordinates of apexes of a poligon. The
 |`close()`|closes the serial port.|
 |`isOpen()`|is the serial port open or not?|
 |`setScreen(w, h)`|sets this screen size. `w`:width[pixel], `h`:height[pixel]|
+|`redraw()`|redraws the screen.|
 |`clearScreen(color)`|fills the screen with a given (`color`).|
 |`setColor(color, width)`|sets the color (`color`), and sets the width of the pen (`width`).|
 |`drawLine(x1, y1, x2, y2)`|draws a line between points `(x1, y1)` and `(x2, y2)`.|
@@ -110,37 +111,40 @@ int main(void)
 {
     // open the USB serial port
     ss.open(&usbSerial, 9600 );
-    
+
     // set the screen size, and black it out
     ss.setScreen(720,540);
     ss.clearScreen(ss.BLACK);
-    
+
     // draw a rectangle
     ss.setColor(ss.RED, 5);
     ss.drawRectangle(100,100,100,100);
-    
+
     // draw a polygon
     ss.setColor(ss.GREEN,3);
     Point triangle[3] ={{400,100}, {450,250}, {500,150}};
     ss.drawPolygon(3,triangle);
-    
+
     // draw a string
     ss.setFont(20);
     ss.setColor(ss.CYAN,5);
     ss.drawString(50,50,"Hello, world!");
-    
+
     // draw a image
     ss.loadImage(0, "image.png");
     ss.drawImage(100, 350, 0);
-    
+
+    // redraw the screen
+    ss.redraw();
+
     while(true)
     {
         ;
     }
-    
+
     // close the USB serial port
     ss.close();
-    
+
     return 0;
 }
 ```
@@ -169,6 +173,3 @@ The application for Android is under consideration.
 ---
 
 &copy; 2015 Bizan Nishimura. All Rights Reserved.
-
-
-

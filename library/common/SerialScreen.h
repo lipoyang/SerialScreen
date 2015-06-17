@@ -30,6 +30,7 @@ public:
     
     // graphic APIs
     void setScreen(int w, int h);
+    void redraw();
     void clearScreen(Color color);
     void setColor(Color color, int width);
     void drawLine(int x1, int y1, int x2, int y2);

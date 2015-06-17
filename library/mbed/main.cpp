@@ -40,7 +40,6 @@ int main(void)
     ss.setFont(20);
     ss.setColor(ss.CYAN,5);
     ss.drawString(50,50,"あいうえお");
-///*
     ss.setColor(ss.RED,5);
     ss.drawString(200,50,"ABC123");
     // loadImage, drawImage
@@ -50,7 +49,7 @@ int main(void)
     ss.drawImage(100, 350, 0);
     ss.drawImage(200, 350, 1);
     ss.drawImage(300, 350, 2);
-//*/
+    ss.redraw();
     
     while(true)
     {

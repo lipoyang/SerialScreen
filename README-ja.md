@@ -50,6 +50,7 @@ SerialScreenライブラリはC++で実装されています。
 |`close()`|シリアルポートを閉じる。|
 |`isOpen()`|シリアルポートが開いているか？|
 |`setScreen(w, h)`|画面サイズを設定する。`w`:幅[ピクセル], `h`:高さ[ピクセル]|
+|`redraw()`|画面を再描画する。|
 |`clearScreen(color)`|画面を指定した色(`color`)で塗りつぶす。|
 |`setColor(color, width)`|描画色(`color`)とペンの太さ(`width`)を設定する。|
 |`drawLine(x1, y1, x2, y2)`|`点(x1, y1)`から点`(x2, y2)`まで直線を描く。|
@@ -109,37 +110,40 @@ int main(void)
 {
     // シリアルポートを開く
     ss.open(&usbSerial, 9600 );
-    
+
     // 画面サイズを設定し、塗りつぶす
     ss.setScreen(720,540);
     ss.clearScreen(ss.BLUE);
-    
+
     // 長方形を描く
     ss.setColor(ss.RED, 5);
     ss.drawRectangle(100,100,100,100);
-    
+
     // 多角形を描く
     ss.setColor(ss.GREEN,3);
     Point triangle[3] ={{400,100}, {450,250}, {500,150}};
     ss.drawPolygon(3,triangle);
-    
+
     // 文字列を描く
     ss.setFont(20);
     ss.setColor(ss.CYAN,5);
     ss.drawString(50,50,"Hello, world!");
-    
+
     // 画像を描く
     ss.loadImage(0, "image.png");
     ss.drawImage(100, 350, 0);
-    
+
+    // 再描画する
+    ss.redraw();
+
     while(true)
     {
         ;
     }
-    
+
     // シリアルポートを閉じる
     ss.close();
-    
+
     return 0;
 }
 ```
@@ -168,4 +172,3 @@ Android版アプリの実装を検討中です。
 ---
 
 &copy; 2015 Bizan Nishimura. All Rights Reserved.
-
